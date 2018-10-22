@@ -1,7 +1,7 @@
 // index : [0, n)
 // limit: 2^M >= N
 // !!! : bud()
-namespace RMQ {
+namespace ST {
     const int N = ::N, M = 22;
     int lg2[N];
     int st[N][M];
