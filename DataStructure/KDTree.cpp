@@ -46,8 +46,8 @@ struct KDTree{
 		nth_element(a+l, a+mid, a+r+1);
 		tr[mid] = a[mid];
 		rep(i, 0, D) tr[mid].ma[i] = tr[mid].mi[i] = tr[mid].d[i];
-		tr[mid].l = build(l, mid-1, k^1);
-		tr[mid].r = build(mid+1, r, k^1);
+		tr[mid].l = build(l, mid-1, (k + 1)%D);
+		tr[mid].r = build(mid+1, r, (k + 1)%D);
 		if (tr[mid].l) up(tr[mid], tr[tr[mid].l]);
 		if (tr[mid].r) up(tr[mid], tr[tr[mid].r]);
 		return mid;
