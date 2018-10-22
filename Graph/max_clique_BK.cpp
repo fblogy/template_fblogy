@@ -1,4 +1,5 @@
-//g[i][i] should be 0
+//g[i][i] should be 0 
+//g[i] is i's edge
 //index [0..N)
 //O(n ^ 3)
 typedef unsigned long long T;
@@ -6,7 +7,11 @@ struct BK {
 	static const int N = 100; T g[N];
 	inline int ctz(T s){ return s ? __builtin_ctzll(s) : 64;}
 	int n, ans;
-	void ini(int _n) { per(i, 0, n = _n) g[i] = (1ull << n) - 1 - (1ull << i); }
+	void ini(int _n) { 
+		//per(i, 0, n = _n) g[i] = (1ull << n) - 1 - (1ull << i); }
+		n = _n;rep(i, 0, n) g[i] = 0;
+		rep(i, 0, n) rep(j, 0, n) if (a[i][j]) g[i] |= 1ull << j;
+	}
 	void gao(T cur, T can, T ban) {
 		if (!can && !ban) { ans = max(ans, __builtin_popcountll(cur)); return; }
 		if (!can) return;
