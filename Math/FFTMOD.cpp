@@ -16,9 +16,7 @@ vir operator +(const vir&A,const vir&B) {return vir(A.re+B.re,A.im+B.im);}
 vir operator -(const vir&A,const vir&B) {return vir(A.re-B.re,A.im-B.im);}
 vir operator *(const vir&A,const vir&B) {return vir(A.re*B.re-A.im*B.im,A.re*B.im+A.im*B.re);}
 
-vir conj(vir a){
-	return vir(a.re,-a.im);
-}
+vir conj(vir a) {return vir(a.re,-a.im);}
 
 vir w[MAXN];
 void FFTInit() {
