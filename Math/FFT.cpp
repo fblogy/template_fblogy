@@ -2,14 +2,14 @@ const int M = 1<<16;
 const db pi = acos(-1);
 
 struct vir{
-	db re, im;
-	vir(db r = 0.0, db i = 0.0) {re = r, im = i;}
-	void print() {printf("%lf %lf\n", re, im);}
+	db r, i;
+	vir(db r = 0.0, db i = 0.0) : r(r), i(i){}
+	void print() {printf("%lf %lf\n", r, i);}
 } a[M*2], b[M*2], W[2][M*2];
 
-vir operator +(const vir&A,const vir&B) {return vir(A.re+B.re,A.im+B.im);}
-vir operator -(const vir&A,const vir&B) {return vir(A.re-B.re,A.im-B.im);}
-vir operator *(const vir&A,const vir&B) {return vir(A.re*B.re-A.im*B.im,A.re*B.im+A.im*B.re);}
+vir operator +(const vir &a, const vir &b) {return vir(a.r + b.r, a.i + b.i);}
+vir operator -(const vir &a, const vir &b) {return vir(a.r - b.r, a.i - b.i);}
+vir operator *(const vir &a, const vir &b) {return vir(a.r * b.r - a.i * b.i, a.r * b.i + a.i * b.r);}
 
 struct FFT{
 	int N, na, nb, rev[M*2];
@@ -20,7 +20,7 @@ struct FFT{
 			for (int j = 0, t = N/(i<<1); j < N; j += i<<1)
 				for (int k = 0, l = 0; k < i; k++, l += t) 
 					x = W[f][l] * a[j+k+i], y = a[j+k], a[j+k] = y+x, a[j+k+i] = y-x;
-		if (f) rep(i, 0, N) a[i].re /= N;
+		if (f) rep(i, 0, N) a[i].r /= N;
 	}
 	void work(){
 		rep(i, 0, N){
@@ -34,11 +34,15 @@ struct FFT{
 		}
 	}	
 	void doit(vir *a, vir *b, int na, int nb){
-		for (N = 1; N < na || N < nb; N <<= 1); N <<= 1;
+		for (N = 1; N < na + nb - 1; N <<= 1);
+		rep(i, na, N) a[i] = vir(0, 0);
+		rep(i, nb, N) b[i] = vir(0, 0);
 		work(), fft(a, 0), fft(b, 0);
-		rep(i, 0, N) a[i] = a[i]*b[i];
+		rep(i, 0, N) a[i] = a[i] * b[i];
 		fft(a, 1);
 		//rep(i, 0, N) a[i].print();
 	}
 } fft;
+
+
 
